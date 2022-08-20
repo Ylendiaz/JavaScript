@@ -23,15 +23,37 @@
     clear: both;
     display: table;
   }
+  /* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+/* The popup chat - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
   </style>
-   
-   Type a message...
-  <div></br><input id=input placeholder="message" /></div>
   
-  Chat Output
+  <div class="chat-popup" id="myForm"></div>
+  <form action="/action_page.php" class="form-container"></form>
+  
+  <h1>Chat</h1>
   <div id=box class="container darker"></div>
   <div class="chat-popup" id="myForm">
   </div>
+
+   <p>Type a message...</p>
+  <div><input id=input placeholder="message" /></div>
+  
+  
+  
       
   <script src=https://cdn.pubnub.com/sdk/javascript/pubnub.4.28.2.min.js></script>
   <script> (function() {
@@ -64,9 +86,7 @@
           });
       })();
       
-      $(".container [type=text]").each(function(i){
-  $(this).attr('value', 'value'+(i+1));
-});
+  
   
   
   </script>
