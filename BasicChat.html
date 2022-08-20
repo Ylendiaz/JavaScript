@@ -1,0 +1,72 @@
+<style>
+  body {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  .container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+  }
+  
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  </style>
+   
+   Type a message...
+  <div></br><input id=input placeholder="message" /></div>
+  
+  Chat Output
+  <div id=box class="container darker"></div>
+  <div class="chat-popup" id="myForm">
+  </div>
+      
+  <script src=https://cdn.pubnub.com/sdk/javascript/pubnub.4.28.2.min.js></script>
+  <script> (function() {
+          var pubnub = new PubNub({
+              publishKey: 'demo',
+              subscribeKey: 'demo'
+          });
+          function $(id) {
+              return document.getElementById(id);
+          }
+          var box = $('box'),
+              input = $('input'),
+              channel = '10chat-demo';
+          pubnub.addListener({
+              message: function(obj) {
+                  box.innerHTML = ('' + obj.message).replace(/[<>]/g, '') + '<br>' + box.innerHTML
+              }
+          });
+          pubnub.subscribe({
+              channels: [channel]
+          });
+          input.addEventListener('keyup', function(e) {
+              if ((e.keyCode || e.charCode) === 13) {
+                  pubnub.publish({
+                      channel: channel,
+                      message: input.value,
+                      x: (input.value = '')
+                  });
+              }
+          });
+      })();
+      
+      $(".container [type=text]").each(function(i){
+  $(this).attr('value', 'value'+(i+1));
+});
+  
+  
+  </script>
